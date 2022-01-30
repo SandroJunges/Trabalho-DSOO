@@ -1,7 +1,9 @@
 from limite.tela_abstrata import TelaAbstrata
 
 class TelaCompetidor(TelaAbstrata):
+
     def tela_opcoes(self):
+        
         print("-------- Competidores ----------")
         print("Escolha a opcao")
         print("1 - Incluir Competidor")

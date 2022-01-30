@@ -2,6 +2,7 @@ from limite.tela_organizador import TelaOrganizador
 from entidade.organizador import Organizador
 
 class ControladorOrganizador():
+
     def __init__(self, controlador_sistema):
         self.__organizadores = []
         self.__controlador_sistema = controlador_sistema
@@ -11,6 +12,7 @@ class ControladorOrganizador():
         for organizador in self.__organizadores:
             if (organizador.nome == nome):
                 return organizador
+                
         return None
 
     def incluir_organizador(self):
@@ -28,6 +30,7 @@ class ControladorOrganizador():
             organizador.nome = novos_dados_organizador["nome"]
             organizador.senha = novos_dados_organizador["senha"]
             self.lista_organizadores()
+
         else:
             self.__tela_organizador.mostra_mensagem("ATENÇÃO: organizador não existente!")
     
@@ -43,6 +46,7 @@ class ControladorOrganizador():
         if (organizador is not None):
             self.__organizadores.remove(organizador)
             self.lista_organizadores()
+
         else:
             self.__tela_organizador.mostra_mensagem("ATENÇÃO: organizador não existente!")
 
@@ -55,4 +59,3 @@ class ControladorOrganizador():
         continua = True
         while continua:
             lista_opcoes[self.__tela_organizador.tela_opcoes()]()
-

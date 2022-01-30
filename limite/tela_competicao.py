@@ -3,6 +3,7 @@ from limite.tela_abstrata import TelaAbstrata
 class TelaCompeticao(TelaAbstrata):
 
     def tela_opcoes(self):
+
         print("----------- Competicao -----------")
         print("Escolha sua opção")
         print("1 - Competidor")
@@ -10,6 +11,7 @@ class TelaCompeticao(TelaAbstrata):
         print("3 - Partida")
         print("4 - Competição")
         print("0 - Finalizar Sistema")
+        
         opcao = int(input("Escolha a opção: "))
         return opcao
 

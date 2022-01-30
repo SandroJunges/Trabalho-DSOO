@@ -5,6 +5,7 @@ from controle.controlador_partida import ControladorPartida
 from controle.controlador_competicao import ControladorCompeticao
 
 class ControladorSistema:
+    
     def __init__(self):
         self.__controlador_competidor = ControladorCompetidor(self)
         self.__controlador_organizador = ControladorOrganizador(self)

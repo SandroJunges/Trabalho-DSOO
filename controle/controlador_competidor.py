@@ -2,6 +2,7 @@ from limite.tela_competidor import TelaCompetidor
 from entidade.competidor import Competidor
 
 class ControladorCompetidor():
+
     def __init__(self, controlador_sistema):
         self.__competidores = []
         self.__controlador_sistema = controlador_sistema
@@ -11,6 +12,7 @@ class ControladorCompetidor():
         for competidor in self.__competidores:
             if (competidor.nome == nome):
                 return competidor
+                
         return None
     
     def incluir_competidor(self):
@@ -28,6 +30,7 @@ class ControladorCompetidor():
             competidor.nome = novos_dados_competidor["nome"]
             competidor.email = novos_dados_competidor["email"]
             self.lista_competidores()
+
         else:
             self.__tela_competidor.mostra_mensagem("ATENÇÃO: Competidor não existente!")
     
@@ -43,6 +46,7 @@ class ControladorCompetidor():
         if (competidor is not None):
             self.__competidores.remove(competidor)
             self.lista_competidores()
+
         else:
             self.__tela_competidor.mostra_mensagem("ATENÇÃO: Competidor não existente!")
 
