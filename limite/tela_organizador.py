@@ -6,14 +6,22 @@ class TelaOrganizador(TelaAbstrata):
 
         print("-------- Organizadores ----------")
         print("Escolha a opcao")
-        print("1 - Incluir Organizador")
+        print("1 - Cadastrar Organizador")
         print("2 - Alterar Organizador")
         print("3 - Listar Organizador")
         print("4 - Excluir Organizador")
         print("0 - Retornar")
 
-        opcao = int(input("Escolha a opcao: "))
-        return opcao
+        while True:
+            try:
+                opcao = int(input("Escolha a opção: "))
+                if opcao > 4 or opcao < 0:
+                    raise ValueError
+            except (KeyError, ValueError, Exception):
+                print("\033[31mERRO! Digite um número de 0 à 4.\033[m")
+                continue
+            else:
+                return opcao
 
     def pega_dados(self):
         print("-------- DADOS ORGANIZADOR --------")

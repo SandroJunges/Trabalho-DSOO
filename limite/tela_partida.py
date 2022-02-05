@@ -6,17 +6,20 @@ class TelaPartida(TelaAbstrata):
 
         print("----------- Partida -----------")
         print("Escolha sua opção")
-        print("1 - Competidor")
-        print("2 - Organizador")
-        print("3 - Partida")
-        print("4 - Competição")
-        print("0 - Finalizar Sistema")
+        print("1 - Relatório")
+        print("0 - Retornar")
         
-        opcao = int(input("Escolha a opção: "))
-        return opcao
+        while True:
+            try:
+                opcao = int(input("Escolha a opção: "))
+            except (KeyError, ValueError, Exception):
+                print("\033[31mERRO! Digite um número válido.\033[m")
+                continue
+            else:
+                return opcao
 
-    def mostra_mensagem(self):
-        pass
+    def mostra_mensagem(self, msg):
+        print(msg)
 
     def mostra_dados(self):
         pass

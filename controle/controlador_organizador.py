@@ -32,7 +32,7 @@ class ControladorOrganizador():
             self.lista_organizadores()
 
         else:
-            self.__tela_organizador.mostra_mensagem("ATENÇÃO: organizador não existente!")
+            self.__tela_organizador.mostra_mensagem("\033[31mATENÇÃO: organizador não existente!\033[m")
     
     def lista_organizadores(self):
         for organizador in self.__organizadores:
@@ -48,7 +48,7 @@ class ControladorOrganizador():
             self.lista_organizadores()
 
         else:
-            self.__tela_organizador.mostra_mensagem("ATENÇÃO: organizador não existente!")
+            self.__tela_organizador.mostra_mensagem("\033[31mATENÇÃO: organizador não existente!\033[m")
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()

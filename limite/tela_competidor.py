@@ -12,19 +12,32 @@ class TelaCompetidor(TelaAbstrata):
         print("4 - Excluir Competidor")
         print("0 - Retornar")
 
-        opcao = int(input("Escolha a opcao: "))
-        return opcao
+        while True:
+            try:
+                opcao = int(input("Escolha a opção: "))
+                if opcao > 4 or opcao < 0:
+                    raise ValueError
+            except (KeyError, ValueError, Exception):
+                print("\033[31mERRO! Digite um número de 0 à 4.\033[m")
+                continue
+            else:
+                return opcao
 
     def pega_dados(self):
         print("-------- DADOS COMPETIDOR --------")
-        nome = input("Nome: ")
-        email = input("E-mail: ")
-
-        return {"nome": nome, "email": email}
+        while True:
+            try:
+                nome = input("Nome: ")
+                if nome == "":
+                    raise Exception
+            except Exception:
+                print("\033[31mERRO: Alguma das informações digitadas não é válida.\033[m")
+                continue
+            else:
+                return {"nome": nome}
 
     def mostra_dados(self, dados_competidor):
         print("Nome do competidor: ",  dados_competidor["nome"])
-        print("E-mail do competidor: ",  dados_competidor["email"])
         print("\n")
 
     def seleciona_competidor(self):
