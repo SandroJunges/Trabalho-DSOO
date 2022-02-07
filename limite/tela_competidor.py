@@ -8,7 +8,7 @@ class TelaCompetidor(TelaAbstrata):
         print("Escolha a opcao")
         print("1 - Incluir Competidor")
         print("2 - Alterar Competidor")
-        print("3 - Listar Competidor")
+        print("3 - Listar Competidores")
         print("4 - Excluir Competidor")
         print("0 - Retornar")
 
@@ -38,7 +38,6 @@ class TelaCompetidor(TelaAbstrata):
 
     def mostra_dados(self, dados_competidor):
         print("Nome do competidor: ",  dados_competidor["nome"])
-        print("\n")
 
     def seleciona_competidor(self):
         nome = input("Nome do competidor que deseja selecionar: ")

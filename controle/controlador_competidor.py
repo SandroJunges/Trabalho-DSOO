@@ -15,8 +15,8 @@ class ControladorCompetidor():
                 
         return None
     
-    def lista_competidoress(self):
-        for competidor in self.__competidores:
+    def lista_competidores(self):
+        for competidor in ControladorCompetidor.__competidores:
             return competidor
     
     def incluir_competidor(self):
