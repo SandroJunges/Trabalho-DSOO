@@ -25,10 +25,17 @@ class TelaOrganizador(TelaAbstrata):
 
     def pega_dados(self):
         print("-------- DADOS ORGANIZADOR --------")
-        nome = input("Nome: ")
-        senha = input("Senha: ")
-
-        return {"nome": nome, "senha": senha}
+        while True:
+            try:
+                nome = input("Nome: ")
+                senha = input("Senha: ")
+                if nome == "" or senha == "":
+                    raise Exception
+            except Exception:
+                print("\033[31mERRO: Alguma das informações digitadas não é válida.\033[m")
+                continue
+            else:
+                return {"nome": nome, "senha": senha}
 
     def mostra_dados(self, dados_organizador):
         print("Nome do organizador: ",  dados_organizador["nome"])

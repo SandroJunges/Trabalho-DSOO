@@ -8,7 +8,7 @@ class TelaCompetidor(TelaAbstrata):
         print("Escolha a opcao")
         print("1 - Incluir Competidor")
         print("2 - Alterar Competidor")
-        print("3 - Listar Competidor")
+        print("3 - Listar Competidores")
         print("4 - Excluir Competidor")
         print("0 - Retornar")
 
@@ -28,17 +28,20 @@ class TelaCompetidor(TelaAbstrata):
         while True:
             try:
                 nome = input("Nome: ")
-                if nome == "":
+                idade = input("Idade: ")
+                nick = input("Apelido: ")
+                if nome == "" or idade == "" or nick == "":
                     raise Exception
             except Exception:
                 print("\033[31mERRO: Alguma das informações digitadas não é válida.\033[m")
                 continue
             else:
-                return {"nome": nome}
+                return {"nome": nome, "idade": idade, "nick": nick}
 
     def mostra_dados(self, dados_competidor):
         print("Nome do competidor: ",  dados_competidor["nome"])
-        print("\n")
+        print("Idade do competidor: ",  dados_competidor["idade"])
+        print("Apelido do competidor: ",  dados_competidor["nick"])
 
     def seleciona_competidor(self):
         nome = input("Nome do competidor que deseja selecionar: ")

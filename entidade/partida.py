@@ -1,36 +1,23 @@
-from entidade.competidor import Competidor
-
 class Partida:
 
-    def __init__(self, data: str, resultado:str, participantes: Competidor):
-
-        self.__data = data
-        self.__resultado = resultado
-        self.__participantes = participantes
+    def __init__(self, participante1: str, participante2: str):
+        self.__participante1 = participante1
+        self.__participante2 = participante2
 
     @property
-    def data(self):
-        return self.__data
+    def participante1(self):
+        return self.__participante1
 
-    @data.setter
-    def data(self, data:str):
-        if isinstance(data, str):
-            self.__data = data
-
+    @participante1.setter
+    def participante1(self, participante1: str):
+        if isinstance(participante1, str):
+            self.__participante1 = participante1
+    
     @property
-    def resultado(self):
-        return self.__resultado
+    def participante2(self):
+        return self.__participante2
 
-    @resultado.setter
-    def resultado(self, resultado:str):
-        if isinstance(resultado, str):
-            self.__resultado = resultado
-
-    @property
-    def participantes(self):
-        return self.__participantes
-
-    @participantes.setter
-    def participantes(self, participantes: Competidor):
-        if isinstance(participantes, Competidor):
-            self.__participantes = participantes
+    @participante2.setter
+    def participante2(self, participante2: str):
+        if isinstance(participante2, str):
+            self.__participante2 = participante2

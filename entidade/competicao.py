@@ -3,13 +3,13 @@ from entidade.partida import Partida
 
 class Competicao():
     
-    def __init__(self, nome_torneio: str, esporte:str, formato: str, participantes: Competidor = None, partida: Partida = None):
+    def __init__(self, nome_torneio: str, esporte:str, formato: str, participantes: Competidor = None, partidas: Partida = None):
 
         self.__nome_torneio = nome_torneio
         self.__esporte = esporte
         self.__formato = formato
         self.__participantes = participantes
-        self.__partida = partida
+        self.__partidas = partidas
 
     @property
     def nome_torneio(self):
@@ -48,10 +48,10 @@ class Competicao():
             self.__participantes = participantes
 
     @property
-    def partida(self):
-        return self.__partida
+    def partidas(self):
+        return self.__partidas
 
-    @partida.setter
-    def partida(self, partida: Partida):
-        if isinstance(partida, Partida):
-            self.__partida = partida
+    @partidas.setter
+    def partidas(self, partidas: partidas):
+        if isinstance(partidas, partidas):
+            self.__partidas = partidas

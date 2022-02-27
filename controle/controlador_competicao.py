@@ -1,6 +1,8 @@
 from limite.tela_competicao import TelaCompeticao
 from entidade.competicao import Competicao
 from controle.controlador_competidor import ControladorCompetidor
+from controle.controlador_partida import ControladorPartida
+from entidade.partida import Partida
 
 class ControladorCompeticao():
 
@@ -17,13 +19,27 @@ class ControladorCompeticao():
 
     def criar_competicao(self):
         dados_competicao = self.__tela_competicao.pega_dados()
-        competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"])
+        continuar = self.__tela_competicao.quer_competidor()
+        dados_competidores = []
+        dados_partidas = []
+        contador = 0
+        while continuar == True:
+            dados_competidores.append(self.__tela_competicao.pega_participantes())
+            continuar = self.__tela_competicao.quer_competidor()
+        if dados_competicao["formato"] == "mata-mata":
+            while contador<len(dados_competidores):
+                dados_partida = {"participante1" : dados_competidores[contador], "participante2" : dados_competidores[contador+1]}
+                partida = Partida(dados_partida["participante1"], dados_partida["participante2"])
+                ControladorPartida.__partidas.append(partida)
+                contador += 2
+            
+        competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competidores, dados_partidas)
         self.__competicoes.append(competicao)
 
-    
+            
     def informacoes_competicao(self):
         for competicao in self.__competicoes:
-            self.__tela_competicao.mostra_dados({"nome_torneio": competicao.nome_torneio, "esporte": competicao.esporte, "formato" : competicao.formato})
+            self.__tela_competicao.mostra_dados({"nome_torneio": competicao.nome_torneio, "esporte": competicao.esporte, "formato" : competicao.formato}, competicao.participantes, competicao.partidas)
     
     def alterar_competicao(self):
         self.informacoes_competicao()
@@ -51,3 +67,19 @@ class ControladorCompeticao():
         continua = True
         while continua:
             lista_opcoes[self.__tela_competicao.tela_opcoes()]()
+    
+    def visualizar(self):
+        pass
+    
+    def registrar_resultado(self):
+        pass
+
+    def alterar_partidas(self):
+        pass
+
+    def administrar(self):
+        lista_opcoes = {1: self.visualizar, 2: self.registrar_resultado, 3: self.alterar_partidas, 0: self.retornar}
+
+        continua = True
+        while continua:
+            lista_opcoes[self.__tela_competicao.tela_administrar()]()
