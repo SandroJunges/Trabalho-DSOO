@@ -40,11 +40,8 @@ class TelaCompetidor(TelaAbstrata):
 
     def mostra_dados(self, dados_competidor):
         print("Nome do competidor: ",  dados_competidor["nome"])
-<<<<<<< HEAD
         print("Idade do competidor: ",  dados_competidor["idade"])
         print("Apelido do competidor: ",  dados_competidor["nick"])
-=======
->>>>>>> 978e9269b9cd34b4c5e22058cd0323a01ba82c9d
 
     def seleciona_competidor(self):
         nome = input("Nome do competidor que deseja selecionar: ")

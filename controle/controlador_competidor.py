@@ -15,13 +15,6 @@ class ControladorCompetidor():
                 
         return None
     
-<<<<<<< HEAD
-=======
-    def lista_competidores(self):
-        for competidor in ControladorCompetidor.__competidores:
-            return competidor
-    
->>>>>>> 978e9269b9cd34b4c5e22058cd0323a01ba82c9d
     def incluir_competidor(self):
         dados_competidor = self.__tela_competidor.pega_dados()
         competidor = Competidor(dados_competidor["nome"], dados_competidor["idade"], dados_competidor["nick"])
