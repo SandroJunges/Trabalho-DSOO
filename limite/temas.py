@@ -1,0 +1,11 @@
+tema = "DarkGreen4"
+logo = "./logos/logo.png"
+logo2 = "./logos/logo2.png"
+fonte_texto = ("calibri", 15)
+tamanho_texto= (40, 2)
+tamanho_texto2 = (20, 1)
+fonte_titulo = ("calibri", 32)
+tamanho_janela = (750, 780)
+tamanho_janela2 = (900, 900)
+cor_titulo = "white"
+fundo_titulo = "#045757"

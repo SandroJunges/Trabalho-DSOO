@@ -1,26 +1,30 @@
 from limite.tela_abstrata import TelaAbstrata
+import PySimpleGUI as sg
+from limite.temas import *
 
 class TelaCompeticao(TelaAbstrata):
 
     def tela_opcoes(self):
+        sg.theme(tema)
 
-        print("----------- Competicao -----------")
-        print("Escolha sua opção")
-        print("1 - Criar competição")
-        print("2 - Lista de competições")
-        print("3 - Alterar informações")
-        print("0 - Retornar")
-
-        while True:
-            try:
-                opcao = int(input("Escolha a opção: "))
-                if opcao > 3 or opcao < 0:
-                    raise ValueError
-            except (KeyError, ValueError, Exception):
-                print("\033[31mERRO! Digite um número de 0 à 3.\033[m")
-                continue
-            else:
-                return opcao
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text("Competição", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text("O que deseja fazer?", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text("")],
+            [sg.Button("Cadastrar Competição", font=fonte_texto, size=tamanho_texto, key=1)],
+            [sg.Button("Listar Competições", font=fonte_texto, size=tamanho_texto, key=2)],
+            [sg.Button("Excluir Competição", font=fonte_texto, size=tamanho_texto, key=3)],
+            [sg.Button("Administrar Competição", font=fonte_texto, size=tamanho_texto, key=4)],
+            [sg.Button("Relatório Competições/Ganhadores", font=fonte_texto, size=tamanho_texto, key=5)],
+            [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=0)]
+        ]
+        
+        window = sg.Window("Competição", size=tamanho_janela2, element_justification="c", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
+        
+        button, values = window.read()
+        window.close()
+        return button
     
     def tela_administrar(self):
 

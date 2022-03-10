@@ -1,23 +1,25 @@
 from limite.tela_abstrata import TelaAbstrata
+import PySimpleGUI as sg
+from limite.temas import *
 
 class TelaSistema(TelaAbstrata):
     def tela_opcoes(self):
+        sg.theme(tema)
         
-        print("----------- Sistema de competição -----------")
-        print("Escolha...")
-        print("1 - Registro Competidores")
-        print("2 - Registro Organizadores")
-        print("3 - Registro Competições")
-        print("4 - Administrar Competições Existentes")
-        print("0 - Encerrar Sistema")
+        layout = [
+            [sg.Image(logo, size=(300, 300))],
+            [sg.Text("Bem-vindo ao knockouter", font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text("O que deseja fazer?", font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text("")],
+            [sg.Button("Competidor", font=fonte_texto, size=tamanho_texto)],
+            [sg.Button("Organizador", font=fonte_texto, size=tamanho_texto)],
+            [sg.Button("Competição", font=fonte_texto, size=tamanho_texto)],
+            [sg.Button("Encerrar Sistema", font=fonte_texto, size=tamanho_texto)]
+        ]
 
-        while True:
-            try:
-                opcao = int(input("Escolha a opção: "))
-                if opcao > 4 or opcao < 0:
-                    raise ValueError
-            except (KeyError, ValueError, Exception):
-                print("\033[31mERRO! Digite um número de 0 à 4.\033[m")
-                continue
-            else:
-                return opcao
+        window = sg.Window("Tela Inicial", size=(tamanho_janela), element_justification="c", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
+        button = window.read()
+        opcao = {"Competidor": 1, "Organizador": 2, "Competição": 3, "Encerrar Sistema": 4}
+        window.close()
+        return opcao[button[0]]
+

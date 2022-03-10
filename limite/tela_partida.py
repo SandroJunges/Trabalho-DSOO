@@ -1,4 +1,5 @@
 from limite.tela_abstrata import TelaAbstrata
+import PySimpleGUI as sg
 
 class TelaPartida(TelaAbstrata):
     
