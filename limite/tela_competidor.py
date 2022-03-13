@@ -1,3 +1,4 @@
+from asyncio import windows_events
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 from limite.temas import *
@@ -89,4 +90,13 @@ class TelaCompetidor(TelaAbstrata):
         
     
     def mostra_mensagem(self, msg):
+        sg.theme(tema)
+        layout = [
+            [sg.Text(msg, font=fonte_texto, size=tamanho_texto2, justification="c")],
+            [sg.Cancel("Ok", font=fonte_texto, size= tamanho_texto2)]
+        ]
+
+        window = sg.Window('Aviso!', size=tamanho_aviso, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, msg = window.read()
+        window.close()
         print(msg)

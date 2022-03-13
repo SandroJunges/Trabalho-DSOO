@@ -22,6 +22,7 @@ class ControladorCompetidor():
             self.__id_competidor = id + 1
             competidor = Competidor(dados_competidor["nome"], dados_competidor["idade"], dados_competidor["nick"], self.__id_competidor)
             self.__competidor_dao.add(competidor)
+            self.__tela_competidor.mostra_mensagem("Competidor criado!")
 
     def pega_competidor_por_id(self, id):
         if id == "" or id ==  None:

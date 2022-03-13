@@ -9,3 +9,4 @@ tamanho_janela = (750, 780)
 tamanho_janela2 = (900, 900)
 cor_titulo = "white"
 fundo_titulo = "#045757"
+tamanho_aviso = (200, 100)
