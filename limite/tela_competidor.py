@@ -56,10 +56,13 @@ class TelaCompetidor(TelaAbstrata):
             [sg.Text('Listando competidores', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
             [competidores],
             [sg.Text('')],
-            [sg.Submit('Retornar', font=fonte_texto, size=tamanho_texto)]
+            [sg.Button('Retornar', font=fonte_texto, size=tamanho_texto, key=1)]
         ]
 
-        sg.Window('Listar Competidores', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        window = sg.Window('Listar Competidores', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button = window.Read()
+        window.close()
+
     
 
     def seleciona_competidor(self, competidores: list):

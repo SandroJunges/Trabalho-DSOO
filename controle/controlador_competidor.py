@@ -9,13 +9,6 @@ class ControladorCompetidor():
         self.__tela_competidor = TelaCompetidor()
         self.__id_competidor = 0
     
-    def pega_competidor_por_nome(self, nome: str):
-        for competidor in self.__competidores:
-            if (competidor.nome == nome):
-                return competidor
-                
-        return None
-    
     def incluir_competidor(self):
         dados_competidor = self.__tela_competidor.pega_dados()
         if (dados_competidor == None):
@@ -39,7 +32,7 @@ class ControladorCompetidor():
         return None
 
     def dados_lista_competidores(self):
-        return [f'ID: {competidor.id_competidor} Nome: {competidor.nome} Idade: {competidor.idade} Nick: {competidor.nick}' for competidor in self.__competidores]
+        return [f'ID: {competidor.id_competidor}  Nome: {competidor.nome} | Idade: {competidor.idade} | Nick: {competidor.nick}' for competidor in self.__competidores]
         
     def alterar_competidor(self):
         id = self.__tela_competidor.seleciona_competidor(self.dados_lista_competidores())
@@ -55,7 +48,7 @@ class ControladorCompetidor():
             return
     
     def lista_competidores(self):
-        self.__tela_competidor.mostra_dados(self.dados_lista_competidores)
+        self.__tela_competidor.mostra_dados(self.dados_lista_competidores())
         
 
 #San depois de tu criar o DAO supostamente vai funcionar esse excluir

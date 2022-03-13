@@ -20,42 +20,69 @@ class TelaOrganizador(TelaAbstrata):
             [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=5)]
         ]
         
-        window = sg.Window("Participante", size=tamanho_janela2, element_justification="c", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
+        window = sg.Window("Organizador", size=tamanho_janela2, element_justification="c", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
         
         button, values = window.read()
         window.close()
         return button
-
-        print("-------- Organizadores ----------")
-        print("Escolha a opcao")
-        print("1 - Cadastrar Organizador")
-        print("2 - Alterar Organizador")
-        print("3 - Listar Organizador")
-        print("4 - Excluir Organizador")
-        print("0 - Retornar")
-
+    
     def pega_dados(self):
-        print("-------- DADOS ORGANIZADOR --------")
-        while True:
-            try:
-                nome = input("Nome: ")
-                senha = input("Senha: ")
-                if nome == "" or senha == "":
-                    raise Exception
-            except Exception:
-                print("\033[31mERRO: Alguma das informações digitadas não é válida.\033[m")
-                continue
-            else:
-                return {"nome": nome, "senha": senha}
+        
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text("Escreva os dados", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text("")],
+            [sg.Text("Nome:", font=fonte_texto, size=tamanho_texto2), sg.InputText(key="nome")],
+            [sg.Text("Senha:", font=fonte_texto, size=tamanho_texto2), sg.InputText(key="senha")],
+            [sg.Text("")],
+            [sg.Submit("Confirmar", font=fonte_texto, size=tamanho_texto2), sg.Cancel("Retornar", font=fonte_texto, size=tamanho_texto2)]
+        ]
 
-    def mostra_dados(self, dados_organizador):
-        print("Nome do organizador: ",  dados_organizador["nome"])
-        print("Senha do organizador: ",  dados_organizador["senha"])
-        print("\n")
+        window = sg.Window("Organizador", size=tamanho_janela2 , element_justification="l", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
+        
+        button, dados_organizador = window.read()
+        window.close()
+        if button == "Confirmar":
+            return dados_organizador
+       
+    def mostra_dados(self, organizadores: list):
+        organizadores = [
+            [sg.Listbox(values=organizadores, font=fonte_texto, size=(60, 8), key='organizador')]
+        ]
 
-    def seleciona_organizador(self):
-        nome = input("Nome do organizador que deseja selecionar: ")
-        return nome
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Listando organizadores', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [organizadores],
+            [sg.Text('')],
+            [sg.Button('Retornar', font=fonte_texto, size=tamanho_texto, key=1)]
+        ]
+
+        window = sg.Window('Listar Organizadores', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button = window.Read()
+        window.close()
+
+    def seleciona_organizador(self, organizadores: list):
+        organizadores = [
+            [sg.Listbox(values=organizadores, font=fonte_texto, size=(60, 8), key='organizador')]
+        ]
+
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Listando organizadores', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [organizadores],
+            [sg.Text('')],
+            [sg.Submit('Confirmar', font=fonte_texto, size=tamanho_texto), sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        window = sg.Window('Selecionar Organizador', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, organizador = window.Read()
+        window.close()
+        if button == 'Confirmar':
+            id = (organizador['organizador'][0].split())[1]
+            id = int(id)
+            return id
+        return
     
     def mostra_mensagem(self, msg):
         print(msg)
