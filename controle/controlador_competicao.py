@@ -24,7 +24,12 @@ class ControladorCompeticao():
                 if competicao.id_competicao > id:
                     id = competicao.id_competicao
             self.__id_competicao = id + 1
-            participantes = self.__controlador_sistema.controlador_competidor.lista_competidores
+            n = 1
+            participantes = []
+            while n <= dados_competicao['formato']:
+                participante = self.__tela_competicao.pega_participantes(self.__controlador_sistema.controlador_competidor.dados_lista_competidores())
+                participantes.append(participante)
+                n = n +1
             competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, self.__id_competicao)
             self.__competicao_dao.add(competicao)
     
@@ -48,17 +53,25 @@ class ControladorCompeticao():
         competicao = self.pega_competicao_por_id(id)
 
         if(competicao is not None):
-            lista_participantes = self.__controlador_sistema.controlador_competidor.dados_lista_competidores()
+            lista_participantes = []
+            total_participantes = competicao.participantes
+            for n in total_participantes:
+                    competidor = self.__controlador_sistema.controlador_competidor.pega_competidor_por_id(n)
+                    lista_participantes.append(competidor.nome)
             n = 1
             while n <= competicao.formato:
-                novos_dados_competicao = self.__tela_competicao.partidas(lista_participantes)
+                rodada = competicao.formato
+                novos_dados_competicao = self.__tela_competicao.partidas(n, rodada, lista_participantes)
+                print (novos_dados_competicao)
                 if novos_dados_competicao != None:
                     #aqui é pra remover SAN ve ai
-                    competicao.participantes = self.__competicao_dao.remove("participante")
-                    n = n+1
+                        self.__competicao_dao.remove(competicao, novos_dados_competicao)
+                        lista_participantes.remove()
+                        n = n+1
                 else:
                     return
             return
+        competicao.formato = competicao.formato/2
         
     def relatorio (self):
         return

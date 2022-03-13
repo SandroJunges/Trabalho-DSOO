@@ -35,7 +35,7 @@ class ControladorCompetidor():
 
     def dados_lista_competidores(self):
         return [f'ID: {competidor.id_competidor}  Nome: {competidor.nome} | Idade: {competidor.idade} | Nick: {competidor.nick}' for competidor in self.__competidor_dao.get_all()]
-        
+
     def alterar_competidor(self):
         
         id = self.__tela_competidor.seleciona_competidor(self.dados_lista_competidores())

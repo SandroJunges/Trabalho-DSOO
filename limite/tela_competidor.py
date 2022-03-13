@@ -40,7 +40,7 @@ class TelaCompetidor(TelaAbstrata):
             [sg.Submit("Confirmar", font=fonte_texto, size=tamanho_texto2), sg.Cancel("Retornar", font=fonte_texto, size=tamanho_texto2)]
         ]
 
-        window = sg.Window("Participante", size=tamanho_janela2 , element_justification="l", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
+        window = sg.Window("Participante", size=(700,700) , element_justification="l", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
         
         button, dados_competidor = window.read()
         window.close()
@@ -65,7 +65,6 @@ class TelaCompetidor(TelaAbstrata):
         window.close()
 
     
-
     def seleciona_competidor(self, competidores: list):
         competidores = [
             [sg.Listbox(values=competidores, font=fonte_texto, size=(60, 8), key='competidor')]

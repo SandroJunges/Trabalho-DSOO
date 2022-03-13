@@ -10,9 +10,9 @@ class CompeticaoDAO(DAO):
         if self.__competicao_valida(competicao):
             super().add(competicao.id_competicao, competicao)
     
-    def remove(self, competicao: Competicao):
+    def remove(self, competicao: Competicao, dados):
         if self.__competicao_valida(competicao):
-            super().remove(competicao.id_competicao)
+            super().remove(competicao.participantes(dados))
 
     def __competicao_valida(self, competicao):
         return (competicao is not None) and (isinstance(competicao, Competicao)) and (isinstance(competicao.id_competicao, int))

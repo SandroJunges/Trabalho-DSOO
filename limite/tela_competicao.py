@@ -88,27 +88,55 @@ class TelaCompeticao(TelaAbstrata):
             return id
         return
     
-    def partidas(self, lista_participantes: list):
-        opcoes_participantes = [
-            [sg.Listbox(lista_participantes)]
+    def pega_participantes(self, competidores : list):
+        competidores = [
+            [sg.Listbox(values=competidores, font=fonte_texto, size=(60, 8), key='competidor')]
         ]
-        teste = [
-            [sg.Listbox(lista_participantes)]
-        ]
+
         layout = [
             [sg.Image(logo2, size=(300, 300))],
-            [sg.Text('Partida', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
-            [sg.Text('Selecione os participantes', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
-            [opcoes_participantes], [sg.Text('X', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)], [teste],
+            [sg.Text('Selecione o competidor', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [competidores],
             [sg.Text('')],
             [sg.Submit('Confirmar', font=fonte_texto, size=tamanho_texto), sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
         ]
 
-        window = sg.Window('Partidas', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
-        button, dados_partida = window.Read()
+        window = sg.Window('Selecionar Competidor', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, competidor = window.Read()
         window.close()
         if button == 'Confirmar':
-            return dados_partida
+            id = (competidor['competidor'][0].split())[1]
+            id = int(id)
+            return id
+        return
+    
+    def partidas(self, n_partida,rodada, lista_participantes: list):
+        n_partida = n_partida
+        rodada = rodada
+        opcao_participante1 = [
+            [sg.Listbox(lista_participantes, key="participante1")]
+        ]
+        opcao_participante2 = [
+            [sg.Listbox(lista_participantes, key='participante2')]
+        ]
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Partida', font=fonte_texto, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo), sg.Text(n_partida, font=fonte_texto, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text('Rodada de', font=fonte_texto, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo), sg.Text(rodada , font=fonte_texto, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo), sg.Text('participantes' , font=fonte_texto, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text('Selecione os participantes', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [opcao_participante1], [sg.Text('X', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)], [opcao_participante2],
+            [(sg.Button('Participante 1 ganhou', font=fonte_texto, size=tamanho_texto2)), sg.Button('Participante 2 ganhou', font=fonte_texto, size=tamanho_texto2)],
+            [sg.Text('')],
+            [sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        window = sg.Window('Partidas', size=(900,900), element_justification="c", grab_anywhere=True).Layout(layout)
+        button = window.Read()
+        window.close()
+        if button == 'Participante 1 ganhou':
+            return 'participante2'
+        if button == 'Participante 2 ganhou':
+            return 'participante1'
 
         
     
