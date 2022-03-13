@@ -1,10 +1,11 @@
 from limite.tela_organizador import TelaOrganizador
 from entidade.organizador import Organizador
+from persistencia.organizador_dao import OrganizadorDAO
 
 class ControladorOrganizador():
 
     def __init__(self, controlador_sistema):
-        self.__organizadores = []
+        self.__organizador_dao = OrganizadorDAO()
         self.__controlador_sistema = controlador_sistema
         self.__tela_organizador = TelaOrganizador()
         self.__id_organizador = 0
@@ -15,27 +16,24 @@ class ControladorOrganizador():
             return
         else:
             id = 0
-            for organizador in self.__organizadores:
+            for organizador in self.__organizador_dao.get_all():
                 if organizador.id_organizador > id:
                     id = organizador.id_organizador
             self.__id_organizador = id + 1
             organizador = Organizador(dados_organizador["nome"], dados_organizador["senha"], self.__id_organizador)
-            self.__organizadores.append(organizador)
+            self.__organizador_dao.add(organizador)
     
     def pega_organizador_por_id(self, id):
         if id == "" or id ==  None:
             return None
 
-        for organizador in self.__organizadores:
+        for organizador in self.__organizador_dao.get_all():
             if organizador.id_organizador == int(id):
                 return organizador
         return None
 
     def dados_lista_organizadores(self):
-        return [f'ID: {organizador.id_organizador}  Nome: {organizador.nome}' for organizador in self.__organizadores]
-    
-    def dados_nome_organizador(self):
-        return [organizador.nome for organizador in self.__organizadores]
+        return [f'ID: {organizador.id_organizador}  Nome: {organizador.nome}' for organizador in self.__organizador_dao.get_all()]
 
     def alterar_organizador(self):
         id = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizadores())
@@ -46,6 +44,7 @@ class ControladorOrganizador():
             if novos_dados_organizador != None:
                 organizador.nome = novos_dados_organizador["nome"]
                 organizador.senha = novos_dados_organizador["senha"]
+                self.__organizador_dao.add(organizador)
                 return
             return
     
@@ -54,10 +53,11 @@ class ControladorOrganizador():
 
 #Mesma coisa do competidor SAN, vai funcioanr qnd tu fizer o DAO
     def excluir_organizador(self):
-        organizador = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizador())
+        id = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizadores())
+        organizador = self.pega_organizador_por_id(id)
 
         if (organizador is not None):
-            self.__organizadores_dao.remove(id)
+            self.__organizador_dao.remove(organizador)
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()
