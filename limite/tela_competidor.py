@@ -17,7 +17,7 @@ class TelaCompetidor(TelaAbstrata):
             [sg.Button("Editar Participante", font=fonte_texto, size=tamanho_texto, key=2)],
             [sg.Button("Excluir Participante", font=fonte_texto, size=tamanho_texto, key=3)],
             [sg.Button("Listar Participantes", font=fonte_texto, size=tamanho_texto, key=4)],
-            [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=0)]
+            [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=5)]
         ]
         
         window = sg.Window("Participante", size=tamanho_janela2, element_justification="c", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
@@ -30,7 +30,7 @@ class TelaCompetidor(TelaAbstrata):
 
         layout = [
             [sg.Image(logo2, size=(300, 300))],
-            [sg.Text("Escreva os dados", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo , element_justification = "c")],
+            [sg.Text("Escreva os dados", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo)],
             [sg.Text("")],
             [sg.Text("Nome:", font=fonte_texto, size=tamanho_texto2), sg.InputText(key="nome")],
             [sg.Text("Idade:", font=fonte_texto, size=tamanho_texto2), sg.Spin([i for i in range(1,100)], initial_value=50, key = 'idade')],
@@ -46,14 +46,44 @@ class TelaCompetidor(TelaAbstrata):
         if button == "Confirmar":
             return dados_competidor
 
-    def mostra_dados(self, dados_competidor):
-        print("Nome do competidor: ",  dados_competidor["nome"])
-        print("Idade do competidor: ",  dados_competidor["idade"])
-        print("Apelido do competidor: ",  dados_competidor["nick"])
+    def mostra_dados(self, competidores: list):
+        competidores = [
+            [sg.Listbox(values=competidores, font=fonte_texto, size=(60, 8), key='competidor')]
+        ]
 
-    def seleciona_competidor(self):
-        nome = input("Nome do competidor que deseja selecionar: ")
-        return nome
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Listando competidores', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [competidores],
+            [sg.Text('')],
+            [sg.Submit('Retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        sg.Window('Listar Competidores', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+    
+
+    def seleciona_competidor(self, competidores: list):
+        competidores = [
+            [sg.Listbox(values=competidores, font=fonte_texto, size=(60, 8), key='competidor')]
+        ]
+
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Selecione o competidor', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [competidores],
+            [sg.Text('')],
+            [sg.Submit('Confirmar', font=fonte_texto, size=tamanho_texto), sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        window = sg.Window('Selecionar Competidor', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, competidor = window.Read()
+        window.close()
+        if button == 'Confirmar':
+            id = (competidor['competidor'][0].split())[1]
+            id = int(id)
+            return id
+        return
+        
     
     def mostra_mensagem(self, msg):
         print(msg)

@@ -54,7 +54,7 @@ class ControladorOrganizador():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.incluir_organizador, 2: self.alterar_organizador, 3: self.lista_organizadores, 4: self.excluir_organizador, 0: self.retornar}
+        lista_opcoes = {1: self.incluir_organizador, 2: self.alterar_organizador, 3: self.lista_organizadores, 4: self.excluir_organizador, 5: self.retornar}
 
         continua = True
         while continua:

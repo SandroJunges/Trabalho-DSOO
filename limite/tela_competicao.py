@@ -14,10 +14,9 @@ class TelaCompeticao(TelaAbstrata):
             [sg.Text("")],
             [sg.Button("Cadastrar Competição", font=fonte_texto, size=tamanho_texto, key=1)],
             [sg.Button("Listar Competições", font=fonte_texto, size=tamanho_texto, key=2)],
-            [sg.Button("Excluir Competição", font=fonte_texto, size=tamanho_texto, key=3)],
-            [sg.Button("Administrar Competição", font=fonte_texto, size=tamanho_texto, key=4)],
-            [sg.Button("Relatório Competições/Ganhadores", font=fonte_texto, size=tamanho_texto, key=5)],
-            [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=0)]
+            [sg.Button("Administrar Competição", font=fonte_texto, size=tamanho_texto, key=3)],
+            [sg.Button("Relatório Competições/Ganhadores", font=fonte_texto, size=tamanho_texto, key=4)],
+            [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=5)]
         ]
         
         window = sg.Window("Competição", size=tamanho_janela2, element_justification="c", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)

@@ -55,31 +55,16 @@ class ControladorCompeticao():
         else:
             self.__tela_competicao.mostra_mensagem("\033[31mATENCAO: Nome de torneio não encontrado!\033[m")
 
-    def mata_mata(self):
-        pass
+    def relatorio (self):
+        return
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.criar_competicao, 2: self.informacoes_competicao, 3: self.alterar_competicao, 0: self.retornar}
+        lista_opcoes = {1: self.criar_competicao, 2: self.informacoes_competicao, 3: self.alterar_competicao, 4: self.relatorio, 5: self.retornar}
 
         continua = True
         while continua:
             lista_opcoes[self.__tela_competicao.tela_opcoes()]()
-    
-    def visualizar(self):
-        pass
-    
-    def registrar_resultado(self):
-        pass
 
-    def alterar_partidas(self):
-        pass
-
-    def administrar(self):
-        lista_opcoes = {1: self.visualizar, 2: self.registrar_resultado, 3: self.alterar_partidas, 0: self.retornar}
-
-        continua = True
-        while continua:
-            lista_opcoes[self.__tela_competicao.tela_administrar()]()
