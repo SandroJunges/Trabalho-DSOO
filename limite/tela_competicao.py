@@ -25,75 +25,92 @@ class TelaCompeticao(TelaAbstrata):
         window.close()
         return button
     
-    def tela_administrar(self):
+    def pega_dados(self, organizadores : list):
+        list_organizador = [
+            [sg.Listbox(organizadores, key="organizador")]
+        ]
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text("Escreva os dados", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text("")],
+            [sg.Text("Nome:", font=fonte_texto, size=tamanho_texto2), sg.InputText(key="nome_torneio")],
+            [sg.Text("Esporte:", font=fonte_texto, size=tamanho_texto2), sg.InputText(key="esporte")],
+            [sg.Text('Quantos participantes para o mata-mata?', font=fonte_texto, size=tamanho_texto2), sg.InputCombo((2,4,8,16,32),default_value='selecione', size=(9,1),key = 'formato')],
+            [sg.Text("Organizador:", font=fonte_texto, size=tamanho_texto2)], [list_organizador],
+            [sg.Text("")],
+            [sg.Submit("Confirmar", font=fonte_texto, size=tamanho_texto2), sg.Cancel("Retornar", font=fonte_texto, size=tamanho_texto2)]
+        ]
 
-        print("----------- Competicao -----------")
-        print("Escolha sua opção")
-        print("1 - Visualizar Competição")
-        print("2 - Registar Resultados")
-        print("3 - Alterar Partidas")
-        print("0 - Retornar")
-
-        while True:
-            try:
-                opcao = int(input("Escolha a opção: "))
-                if opcao > 3 or opcao < 0:
-                    raise ValueError
-            except (KeyError, ValueError, Exception):
-                print("\033[31mERRO! Digite um número de 0 à 3.\033[m")
-                continue
-            else:
-                return opcao
-
-    def pega_dados(self):
-        print("-------- DADOS COMPETIÇÃO --------")
-        while True:
-            try:
-                nome = input("Nome da competição: ")
-                esporte = input("Esporte: ")
-                formato = input("Mata-Mata ou Liga: ").lower()
-                if nome == "" or esporte == "" or formato not in ["mata-mata", "liga"]:
-                    raise Exception
-            except Exception:
-                print("\033[31mERRO: Alguma das informações digitadas não é válida.\033[m")
-                continue
-            else:
-                return {"nome_torneio": nome, "esporte": esporte, "formato": formato}
-
-    def quer_competidor(Self):
-        print("-------- DADOS COMPETIÇÃO --------")
-        while True:
-            try:
-                continuar = input("Quer adicionar mais um competidor na competição? S/N").upper()
-                if continuar not in ["S","N"]:
-                    raise Exception
-            except Exception:
-                    print("Digite S ou N")
-                    continue
-            if continuar == "S":
-                    return True
-            else:
-                return False
-                
-
-    def pega_participantes(self):
-        print("-------- DADOS COMPETIÇÃO --------")
-        participante = input("Qual participante?")
-
-        return participante
+        window = sg.Window("Competicao", size=tamanho_janela2 , element_justification="l", grab_anywhere=True, default_element_size=(40 , 1)).Layout(layout)
         
+        button, dados_competidor = window.read()
+        window.close()
+        if button == "Confirmar":
+            return dados_competidor
             
-    def mostra_dados(self, dados_competicao, dados_competidores, dados_partidas):
-        print("Nome da competição: ",  dados_competicao["nome_torneio"])
-        print("Esporte da competição: ",  dados_competicao["esporte"])
-        print("Formato da competição: ",  dados_competicao["formato"])
-        print("Participantes: ", dados_competidores)
-        print("Partidas: ", dados_partidas)
-        print("\n")
+    def mostra_dados(self, competicoes: list):
+        competicoes = [
+            [sg.Listbox(values=competicoes, font=fonte_texto, size=(60, 8), key='competicao')]
+        ]
 
-    def seleciona_competicao(self):
-        nome = input("Nome da competição que deseja selecionar: ")
-        return nome
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Listando competicoes', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [competicoes],
+            [sg.Text('')],
+            [sg.Button('Retornar', font=fonte_texto, size=tamanho_texto, key=1)]
+        ]
+
+        window = sg.Window('Listar Competicoes', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button = window.Read()
+        window.close()
+
+
+    def seleciona_competicao(self, competicoes: list):
+        competicoes = [
+            [sg.Listbox(values=competicoes, font=fonte_texto, size=(60, 8), key='competicao')]
+        ]
+
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Selecione a competicao', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [competicoes],
+            [sg.Text('')],
+            [sg.Submit('Confirmar', font=fonte_texto, size=tamanho_texto), sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        window = sg.Window('Selecionar Competicao', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, competicao = window.Read()
+        window.close()
+        if button == 'Confirmar':
+            id = (competicao['competicao'][0].split())[1]
+            id = int(id)
+            return id
+        return
+    
+    def partidas(self, lista_participantes: list):
+        opcoes_participantes = [
+            [sg.Listbox(lista_participantes)]
+        ]
+        teste = [
+            [sg.Listbox(lista_participantes)]
+        ]
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Partida', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text('Selecione os participantes', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [opcoes_participantes], [sg.Text('X', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)], [teste],
+            [sg.Text('')],
+            [sg.Submit('Confirmar', font=fonte_texto, size=tamanho_texto), sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        window = sg.Window('Partidas', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, dados_partida = window.Read()
+        window.close()
+        if button == 'Confirmar':
+            return dados_partida
+
+        
     
     def mostra_mensagem(self, msg):
         print(msg)

@@ -8,18 +8,7 @@ class ControladorPartida():
         self.__partidas = []
         
     def retornar (self):
-        self.__controlador_sistema.abre_tela()
-
-    def pega_partida_por_numero(self, numero: int):
-        for partida in self.__partidas:
-            if (partida.numero == numero):
-                return partida
-                
-        return None
-    
-    def relatorio(self):
-        ###mostrar o resultado ou data das partidas###
-        pass
+        self.__controlador_sistema.controlador_competicao.abre_tela()
 
     def abre_tela(self):
         lista_opcoes = {1: self.relatorio, 0: self.retornar}

@@ -9,6 +9,10 @@ class ControladorCompetidor():
         self.__tela_competidor = TelaCompetidor()
         self.__id_competidor = 0
     
+
+    def lista_competidores(self):
+        return self.__competidores
+
     def incluir_competidor(self):
         dados_competidor = self.__tela_competidor.pega_dados()
         if (dados_competidor == None):
@@ -33,6 +37,9 @@ class ControladorCompetidor():
 
     def dados_lista_competidores(self):
         return [f'ID: {competidor.id_competidor}  Nome: {competidor.nome} | Idade: {competidor.idade} | Nick: {competidor.nick}' for competidor in self.__competidores]
+    
+    def dados_nome_competidores(self):
+        return [competidor.nome for competidor in self.__competidores]
         
     def alterar_competidor(self):
         id = self.__tela_competidor.seleciona_competidor(self.dados_lista_competidores())
