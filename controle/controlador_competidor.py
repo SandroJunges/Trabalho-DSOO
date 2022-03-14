@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 from limite.tela_competidor import TelaCompetidor
 from entidade.competidor import Competidor
 from persistencia.competidor_dao import CompetidorDAO
@@ -27,6 +28,12 @@ class ControladorCompetidor():
             self.verifica_duplicidade_de_nick(dados_competidor['nick'])
         except DuplicatedException as e:
             return self.__tela_competidor.mostra_mensagem(str(e))
+        teste_input = dados_competidor['idade']
+        try:
+            int(teste_input)
+        except ValueError:
+            self.__tela_competidor.mostra_mensagem("Insira um número inteiro na Idade!")
+            return
 
         else:
             id = 0
@@ -66,6 +73,12 @@ class ControladorCompetidor():
             self.verifica_duplicidade_de_nick(novos_dados_competidor['nick'])
         except DuplicatedException as e:
             return self.__tela_competidor.mostra_mensagem(str(e))
+        teste_input = novos_dados_competidor['idade']
+        try:
+            int(teste_input)
+        except ValueError:
+            self.__tela_competidor.mostra_mensagem("Insira um número inteiro na Idade!")
+            return
 
         if(competidor is not None):
             if novos_dados_competidor != None:
