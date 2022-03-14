@@ -1,6 +1,8 @@
 from limite.tela_competidor import TelaCompetidor
 from entidade.competidor import Competidor
 from persistencia.competidor_dao import CompetidorDAO
+from excecoes.duplicated_exception import DuplicatedException
+from excecoes.empty_field import EmptyFieldError
 
 class ControladorCompetidor():
 
@@ -14,6 +16,18 @@ class ControladorCompetidor():
         dados_competidor = self.__tela_competidor.pega_dados()
         if (dados_competidor == None):
             return
+
+        try:
+            if dados_competidor['nome'] == "" or dados_competidor['nick'] == "":
+                raise EmptyFieldError()
+        except EmptyFieldError as e:
+            return self.__tela_competidor.mostra_mensagem(e.mensagem)
+        try:
+            self.verifica_duplicidade_de_nome(dados_competidor['nome'])
+            self.verifica_duplicidade_de_nick(dados_competidor['nick'])
+        except DuplicatedException as e:
+            return self.__tela_competidor.mostra_mensagem(str(e))
+
         else:
             id = 0
             for competidor in self.__competidor_dao.get_all():
@@ -41,8 +55,19 @@ class ControladorCompetidor():
         id = self.__tela_competidor.seleciona_competidor(self.dados_lista_competidores())
         competidor = self.pega_competidor_por_id(id)
 
+        novos_dados_competidor = self.__tela_competidor.pega_dados()
+        try:
+            if novos_dados_competidor['nome'] == "" or novos_dados_competidor['nick'] == "":
+                raise EmptyFieldError()
+        except EmptyFieldError as e:
+            return self.__tela_competidor.mostra_mensagem(e.mensagem)
+        try:
+            self.verifica_duplicidade_de_nome(novos_dados_competidor['nome'])
+            self.verifica_duplicidade_de_nick(novos_dados_competidor['nick'])
+        except DuplicatedException as e:
+            return self.__tela_competidor.mostra_mensagem(str(e))
+
         if(competidor is not None):
-            novos_dados_competidor = self.__tela_competidor.pega_dados()
             if novos_dados_competidor != None:
                 competidor.nome = novos_dados_competidor["nome"]
                 competidor.idade = novos_dados_competidor["idade"]
@@ -60,6 +85,16 @@ class ControladorCompetidor():
 
         if (competidor is not None):
             self.__competidor_dao.remove(competidor)
+
+    def verifica_duplicidade_de_nome (self, nome):
+        for competidor in self.__competidor_dao.get_all():
+            if nome == competidor.nome:
+                raise DuplicatedException(mensagem_personalizada='Este competidor já foi criado')
+
+    def verifica_duplicidade_de_nick (self, nick):
+        for competidor in self.__competidor_dao.get_all():
+            if nick == competidor.nick:
+                raise DuplicatedException(mensagem_personalizada='Já existe um competidor com esse apelido')
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()

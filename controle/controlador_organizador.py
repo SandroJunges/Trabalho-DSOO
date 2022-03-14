@@ -1,6 +1,8 @@
 from limite.tela_organizador import TelaOrganizador
 from entidade.organizador import Organizador
 from persistencia.organizador_dao import OrganizadorDAO
+from excecoes.empty_field import EmptyFieldError
+from excecoes.duplicated_exception import DuplicatedException
 
 class ControladorOrganizador():
 
@@ -14,6 +16,17 @@ class ControladorOrganizador():
         dados_organizador = self.__tela_organizador.pega_dados()
         if (dados_organizador == None):
             return
+
+        try:
+            if dados_organizador['nome'] == "" or dados_organizador['senha'] == "":
+                raise EmptyFieldError()
+        except EmptyFieldError as e:
+            return self.__tela_organizador.mostra_mensagem(e.mensagem)
+        try:
+            self.verifica_duplicidade_de_nome(dados_organizador['nome'])
+        except DuplicatedException as e:
+            return self.__tela_organizador.mostra_mensagem(str(e))
+
         else:
             id = 0
             for organizador in self.__organizador_dao.get_all():
@@ -38,9 +51,19 @@ class ControladorOrganizador():
     def alterar_organizador(self):
         id = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizadores())
         organizador = self.pega_organizador_por_id(id)
+        novos_dados_organizador = self.__tela_organizador.pega_dados()
+
+        try:
+            if novos_dados_organizador['nome'] == "" or novos_dados_organizador['senha'] == "":
+                raise EmptyFieldError()
+        except EmptyFieldError as e:
+            return self.__tela_organizador.mostra_mensagem(e.mensagem)
+        try:
+            self.verifica_duplicidade_de_nome(novos_dados_organizador['nome'])
+        except DuplicatedException as e:
+            return self.__tela_organizador.mostra_mensagem(str(e))
 
         if(organizador is not None):
-            novos_dados_organizador = self.__tela_organizador.pega_dados()
             if novos_dados_organizador != None:
                 organizador.nome = novos_dados_organizador["nome"]
                 organizador.senha = novos_dados_organizador["senha"]
@@ -51,13 +74,17 @@ class ControladorOrganizador():
     def lista_organizadores(self):
         self.__tela_organizador.mostra_dados(self.dados_lista_organizadores())
 
-#Mesma coisa do competidor SAN, vai funcioanr qnd tu fizer o DAO
     def excluir_organizador(self):
         id = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizadores())
         organizador = self.pega_organizador_por_id(id)
 
         if (organizador is not None):
             self.__organizador_dao.remove(organizador)
+
+    def verifica_duplicidade_de_nome (self, nome):
+        for organizador in self.__organizador_dao.get_all():
+            if nome == organizador.nome:
+                raise DuplicatedException(mensagem_personalizada='Este organizador já foi criado!')
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()

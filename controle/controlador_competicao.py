@@ -4,6 +4,7 @@ from controle.controlador_competidor import ControladorCompetidor
 from controle.controlador_partida import ControladorPartida
 from entidade.partida import Partida
 from persistencia.competicao_dao import CompeticaoDAO
+from excecoes.empty_field import EmptyFieldError
 
 class ControladorCompeticao():
 
@@ -18,6 +19,13 @@ class ControladorCompeticao():
         dados_competicao = self.__tela_competicao.pega_dados(list_organizador)
         if (dados_competicao == None):
             return
+
+        try:
+            if dados_competicao['nome_torneio'] == "" or dados_competicao['esporte'] == "":
+                raise EmptyFieldError()
+        except EmptyFieldError as e:
+            return self.__tela_competicao.mostra_mensagem(e.mensagem)   
+
         else:
             id = 0
             for competicao in self.__competicao_dao.get_all():

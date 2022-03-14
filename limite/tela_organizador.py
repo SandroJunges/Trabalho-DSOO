@@ -85,4 +85,13 @@ class TelaOrganizador(TelaAbstrata):
         return
     
     def mostra_mensagem(self, msg):
+        sg.theme(tema)
+        layout = [
+            [sg.Text(msg, font=fonte_texto, size=tamanho_texto_aviso, justification="c")],
+            [sg.Cancel("Ok", font=fonte_texto, size= tamanho_texto_aviso)]
+        ]
+
+        window = sg.Window('Aviso!', size=tamanho_aviso2, element_justification="c", grab_anywhere=True).Layout(layout)
+        button, msg = window.read()
+        window.close()
         print(msg)
