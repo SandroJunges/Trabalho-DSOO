@@ -109,13 +109,13 @@ class TelaCompeticao(TelaAbstrata):
             [opcao_participante1], [sg.Text('X', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)], [opcao_participante2],
             [(sg.Button('Participante 1 ganhou', font=fonte_texto, size=tamanho_texto2)), sg.Button('Participante 2 ganhou', font=fonte_texto, size=tamanho_texto2)],
             [sg.Text('')],
-            [sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
+            [sg.Exit('Cancelar e retornar', font=fonte_texto, size=tamanho_texto, key="Exit")]
         ]
 
         window = sg.Window('Partidas', size=(900,900), element_justification="c", grab_anywhere=True).Layout(layout)
         while True:
             event, values = window.read()
-            if event is None or event == 'Cancel':
+            if event is None or event == 'Exit':
                 break
             if event == 'Participante 1 ganhou':
                 return values['participante2']

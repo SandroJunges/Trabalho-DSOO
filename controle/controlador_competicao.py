@@ -94,6 +94,7 @@ class ControladorCompeticao():
                                 lista_participantes.remove(name)
                                 n = n+1
                         else:
+                            n = competicao.formato + 1
                             return
                     except IndexError:
                         self.__tela_competicao.mostra_mensagem("Aviso: Selecione um competidor!")
