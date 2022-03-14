@@ -53,6 +53,15 @@ class ControladorCompetidor():
             if competidor.id_competidor == int(id):
                 return competidor
         return None
+    
+    def pega_id_por_nome(self, nome):
+        if nome == "" or nome ==  None:
+            return None
+
+        for competidor in self.__competidor_dao.get_all():
+            if competidor.nome == nome:
+                return competidor.id_competidor
+        return None
 
     def dados_lista_competidores(self):
         return [f'ID: {competidor.id_competidor}  Nome: {competidor.nome} | Idade: {competidor.idade} | Nick: {competidor.nick}' for competidor in self.__competidor_dao.get_all()]

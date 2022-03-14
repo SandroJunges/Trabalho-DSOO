@@ -38,7 +38,8 @@ class ControladorCompeticao():
                 participante = self.__tela_competicao.pega_participantes(self.__controlador_sistema.controlador_competidor.dados_lista_competidores())
                 participantes.append(participante)
                 n = n +1
-            competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, self.__id_competicao)
+            ganhador = 'Nenhum'
+            competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, ganhador, self.__id_competicao)
             self.__tela_competicao.mostra_mensagem("Competição criada com sucesso!")
             self.__competicao_dao.add(competicao)
     
@@ -69,21 +70,27 @@ class ControladorCompeticao():
                     lista_participantes.append(competidor.nome)
             n = 1
             while n <= competicao.formato:
-                rodada = competicao.formato
-                novos_dados_competicao = self.__tela_competicao.partidas(n, rodada, lista_participantes)
-                print (novos_dados_competicao)
-                if novos_dados_competicao != None:
-                    #aqui é pra remover SAN ve ai
-                        self.__competicao_dao.remove(competicao, novos_dados_competicao)
-                        lista_participantes.remove()
-                        n = n+1
+                if len(lista_participantes) == 1:
+                    self.__tela_competicao.ganhador(lista_participantes)
+                    competicao.ganhador = lista_participantes[0]
+                    n = competicao.formato + 1
                 else:
-                    return
-            return
-        competicao.formato = competicao.formato/2
+                    rodada = competicao.formato
+                    novos_dados_competicao = self.__tela_competicao.partidas(n, rodada, lista_participantes)
+                    if novos_dados_competicao != None:
+                        #aqui é pra remover SAN ve ai
+                            name =  novos_dados_competicao[0]
+                            competicao.participantes.remove(self.__controlador_sistema.controlador_competidor.pega_id_por_nome(name))
+                            lista_participantes.remove(name)
+                            n = n+1
+                    else:
+                        return
+    
+    def dados_competicao_ganhador(self):
+         return [f'ID: {competicao.id_competicao}  Nome: {competicao.nome_torneio} | Esporte: {competicao.esporte} | Qtd. Participantes: {competicao.formato} ||||| Vencedor: {competicao.ganhador}' for competicao in self.__competicao_dao.get_all()]        
         
     def relatorio (self):
-        return
+        self.__tela_competicao.mostra_dados(self.dados_competicao_ganhador())
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()

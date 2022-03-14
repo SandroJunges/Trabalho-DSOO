@@ -3,13 +3,14 @@ from entidade.partida import Partida
 
 class Competicao():
     
-    def __init__(self, nome_torneio: str, esporte:str, formato: int, organizador: str, participantes: list, id_competicao: int):
+    def __init__(self, nome_torneio: str, esporte:str, formato: int, organizador: str, participantes: list, ganhador: str, id_competicao: int):
 
         self.__nome_torneio = nome_torneio
         self.__esporte = esporte
         self.__formato = formato
         self.__organizador = organizador
         self.__participantes = participantes
+        self.__ganhador = ganhador
         self.__id_competicao = id_competicao
 
     @property
@@ -46,7 +47,7 @@ class Competicao():
     @organizador.setter
     def organizador(self, organizador:str):
         if isinstance(organizador, str):
-            self.__formato = organizador
+            self.__organizador = organizador
 
     @property
     def participantes(self):
@@ -56,6 +57,15 @@ class Competicao():
     def participantes(self, participantes: list):
         if isinstance(participantes, list):
             self.__participantes = participantes
+    
+    @property
+    def ganhador(self):
+        return self.__ganhador
+
+    @ganhador.setter
+    def ganhador(self, ganhador:str):
+        if isinstance(ganhador, str):
+            self.__ganhador = ganhador
 
     @property
     def id_competicao(self):

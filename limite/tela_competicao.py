@@ -50,7 +50,7 @@ class TelaCompeticao(TelaAbstrata):
             
     def mostra_dados(self, competicoes: list):
         competicoes = [
-            [sg.Listbox(values=competicoes, font=fonte_texto, size=(60, 8), key='competicao')]
+            [sg.Listbox(values=competicoes, font=fonte_texto, size=(80, 8), key='competicao')]
         ]
 
         layout = [
@@ -68,7 +68,7 @@ class TelaCompeticao(TelaAbstrata):
 
     def seleciona_competicao(self, competicoes: list):
         competicoes = [
-            [sg.Listbox(values=competicoes, font=fonte_texto, size=(60, 8), key='competicao')]
+            [sg.Listbox(values=competicoes, font=fonte_texto, size=(80, 8), key='competicao')]
         ]
 
         layout = [
@@ -90,7 +90,7 @@ class TelaCompeticao(TelaAbstrata):
     
     def pega_participantes(self, competidores : list):
         competidores = [
-            [sg.Listbox(values=competidores, font=fonte_texto, size=(60, 8), key='competidor')]
+            [sg.Listbox(values=competidores, font=fonte_texto, size=(80, 8), key='competidor')]
         ]
 
         layout = [
@@ -114,10 +114,10 @@ class TelaCompeticao(TelaAbstrata):
         n_partida = n_partida
         rodada = rodada
         opcao_participante1 = [
-            [sg.Listbox(lista_participantes, key="participante1")]
+            [sg.Listbox(lista_participantes, enable_events=True, key="participante1")]
         ]
         opcao_participante2 = [
-            [sg.Listbox(lista_participantes, key='participante2')]
+            [sg.Listbox(lista_participantes, enable_events=True, key='participante2')]
         ]
         layout = [
             [sg.Image(logo2, size=(300, 300))],
@@ -131,14 +131,46 @@ class TelaCompeticao(TelaAbstrata):
         ]
 
         window = sg.Window('Partidas', size=(900,900), element_justification="c", grab_anywhere=True).Layout(layout)
+        while True:
+            event, values = window.read()
+            if event is None or event == 'Cancel':
+                break
+            if event == 'Participante 1 ganhou':
+                return values['participante2']
+            if event == 'Participante 2 ganhou':
+                return values['participante1']
+        window.close()
+
+    def ganhador(self, ganhador : list):
+        vencedor = ganhador[0]
+        layout = [
+            [sg.Image(logo, size=(300, 300))],
+            [sg.Text('O VENCEDOR É', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text(vencedor, font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [sg.Text('')],
+            [sg.Button('Retornar', font=fonte_texto, size=tamanho_texto)]
+        ]
+
+        window = sg.Window('Partidas', size=(900,900), element_justification="c", grab_anywhere=True).Layout(layout)
+        button, values = window.read()
+        window.close()
+    
+    def mostra_dados(self, competicoes: list):
+        competicoes = [
+            [sg.Listbox(values=competicoes, font=fonte_texto, size=(80, 8), key='competicoes')]
+        ]
+
+        layout = [
+            [sg.Image(logo2, size=(300, 300))],
+            [sg.Text('Relatório Competições/Vencedores', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
+            [competicoes],
+            [sg.Text('')],
+            [sg.Button('Retornar', font=fonte_texto, size=tamanho_texto, key=1)]
+        ]
+
+        window = sg.Window('Relatório Competições', size=(900,900), element_justification="c", grab_anywhere=True).Layout(layout)
         button = window.Read()
         window.close()
-        if button == 'Participante 1 ganhou':
-            return 'participante2'
-        if button == 'Participante 2 ganhou':
-            return 'participante1'
-
-        
     
     def mostra_mensagem(self, msg):
         sg.theme(tema)

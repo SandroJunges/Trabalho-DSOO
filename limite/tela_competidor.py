@@ -49,7 +49,7 @@ class TelaCompetidor(TelaAbstrata):
 
     def mostra_dados(self, competidores: list):
         competidores = [
-            [sg.Listbox(values=competidores, font=fonte_texto, size=(60, 8), key='competidor')]
+            [sg.Listbox(values=competidores, font=fonte_texto, size=(80, 8), key='competidor')]
         ]
 
         layout = [
