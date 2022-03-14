@@ -51,19 +51,18 @@ class ControladorOrganizador():
     def alterar_organizador(self):
         id = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizadores())
         organizador = self.pega_organizador_por_id(id)
-        novos_dados_organizador = self.__tela_organizador.pega_dados()
-
-        try:
-            if novos_dados_organizador['nome'] == "" or novos_dados_organizador['senha'] == "":
-                raise EmptyFieldError()
-        except EmptyFieldError as e:
-            return self.__tela_organizador.mostra_mensagem(e.mensagem)
-        try:
-            self.verifica_duplicidade_de_nome(novos_dados_organizador['nome'])
-        except DuplicatedException as e:
-            return self.__tela_organizador.mostra_mensagem(str(e))
 
         if(organizador is not None):
+            novos_dados_organizador = self.__tela_organizador.pega_dados()
+            try:
+                if novos_dados_organizador['nome'] == "" or novos_dados_organizador['senha'] == "":
+                    raise EmptyFieldError()
+            except EmptyFieldError as e:
+                return self.__tela_organizador.mostra_mensagem(e.mensagem)
+            try:
+                self.verifica_duplicidade_de_nome(novos_dados_organizador['nome'])
+            except DuplicatedException as e:
+                return self.__tela_organizador.mostra_mensagem(str(e))
             if novos_dados_organizador != None:
                 organizador.nome = novos_dados_organizador["nome"]
                 organizador.senha = novos_dados_organizador["senha"]

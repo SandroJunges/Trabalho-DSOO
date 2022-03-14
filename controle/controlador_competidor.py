@@ -62,25 +62,25 @@ class ControladorCompetidor():
         id = self.__tela_competidor.seleciona_competidor(self.dados_lista_competidores())
         competidor = self.pega_competidor_por_id(id)
 
-        novos_dados_competidor = self.__tela_competidor.pega_dados()
-        try:
-            if novos_dados_competidor['nome'] == "" or novos_dados_competidor['nick'] == "":
-                raise EmptyFieldError()
-        except EmptyFieldError as e:
-            return self.__tela_competidor.mostra_mensagem(e.mensagem)
-        try:
-            self.verifica_duplicidade_de_nome(novos_dados_competidor['nome'])
-            self.verifica_duplicidade_de_nick(novos_dados_competidor['nick'])
-        except DuplicatedException as e:
-            return self.__tela_competidor.mostra_mensagem(str(e))
-        teste_input = novos_dados_competidor['idade']
-        try:
-            int(teste_input)
-        except ValueError:
-            self.__tela_competidor.mostra_mensagem("Insira um número inteiro na Idade!")
-            return
 
         if(competidor is not None):
+            novos_dados_competidor = self.__tela_competidor.pega_dados()
+            try:
+                if novos_dados_competidor['nome'] == "" or novos_dados_competidor['nick'] == "":
+                    raise EmptyFieldError()
+            except EmptyFieldError as e:
+                return self.__tela_competidor.mostra_mensagem(e.mensagem)
+            try:
+                self.verifica_duplicidade_de_nome(novos_dados_competidor['nome'])
+                self.verifica_duplicidade_de_nick(novos_dados_competidor['nick'])
+            except DuplicatedException as e:
+                return self.__tela_competidor.mostra_mensagem(str(e))
+            teste_input = novos_dados_competidor['idade']
+            try:
+                int(teste_input)
+            except ValueError:
+                self.__tela_competidor.mostra_mensagem("Insira um número inteiro na Idade!")
+                return
             if novos_dados_competidor != None:
                 competidor.nome = novos_dados_competidor["nome"]
                 competidor.idade = novos_dados_competidor["idade"]
