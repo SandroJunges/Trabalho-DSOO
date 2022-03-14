@@ -39,6 +39,7 @@ class ControladorCompeticao():
                 participantes.append(participante)
                 n = n +1
             competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, self.__id_competicao)
+            self.__tela_competicao.mostra_mensagem("Competição criada com sucesso!")
             self.__competicao_dao.add(competicao)
     
     def pega_competicao_por_id(self, id):
@@ -93,4 +94,3 @@ class ControladorCompeticao():
         continua = True
         while continua:
             lista_opcoes[self.__tela_competicao.tela_opcoes()]()
-

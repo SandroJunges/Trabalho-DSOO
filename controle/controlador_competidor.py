@@ -85,6 +85,7 @@ class ControladorCompetidor():
                 competidor.nome = novos_dados_competidor["nome"]
                 competidor.idade = novos_dados_competidor["idade"]
                 competidor.nick = novos_dados_competidor["nick"]
+                self.__tela_competidor.mostra_mensagem("Competidor alterado!")
                 self.__competidor_dao.add(competidor)
                 return
             return
@@ -97,6 +98,7 @@ class ControladorCompetidor():
         competidor = self.pega_competidor_por_id(id)
 
         if (competidor is not None):
+            self.__tela_competidor.mostra_mensagem("Competidor excluído!")
             self.__competidor_dao.remove(competidor)
 
     def verifica_duplicidade_de_nome (self, nome):

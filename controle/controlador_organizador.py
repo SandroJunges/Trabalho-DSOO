@@ -68,6 +68,7 @@ class ControladorOrganizador():
                 organizador.nome = novos_dados_organizador["nome"]
                 organizador.senha = novos_dados_organizador["senha"]
                 self.__organizador_dao.add(organizador)
+                self.__tela_organizador.mostra_mensagem("Organizador alterado!")
                 return
             return
     
@@ -79,6 +80,7 @@ class ControladorOrganizador():
         organizador = self.pega_organizador_por_id(id)
 
         if (organizador is not None):
+            self.__tela_organizador.mostra_mensagem("Organizador excluído!")
             self.__organizador_dao.remove(organizador)
 
     def verifica_duplicidade_de_nome (self, nome):
