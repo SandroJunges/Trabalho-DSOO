@@ -80,6 +80,7 @@ class ControladorCompeticao():
                     competicao.ganhador = lista_participantes[0]
                     n = competicao.formato + 1
                     self.__competicao_dao.add(competicao)
+                    self.__tela_competicao.mostra_mensagem("Competição finalizada!")
                 else:
                     rodada = competicao.formato
                     novos_dados_competicao = self.__tela_competicao.partidas(n, rodada, lista_participantes)
