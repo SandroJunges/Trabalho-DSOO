@@ -1,7 +1,6 @@
 from limite.tela_sistema import TelaSistema
 from controle.controlador_competidor import ControladorCompetidor
 from controle.controlador_organizador import ControladorOrganizador
-from controle.controlador_partida import ControladorPartida
 from controle.controlador_competicao import ControladorCompeticao
 
 class ControladorSistema:
@@ -9,7 +8,6 @@ class ControladorSistema:
     def __init__(self):
         self.__controlador_competidor = ControladorCompetidor(self)
         self.__controlador_organizador = ControladorOrganizador(self)
-        self.__controlador_partida = ControladorPartida(self)
         self.__controlador_competicao = ControladorCompeticao(self)
         self.__tela_sistema = TelaSistema
 

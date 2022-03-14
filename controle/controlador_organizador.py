@@ -35,6 +35,7 @@ class ControladorOrganizador():
             self.__id_organizador = id + 1
             organizador = Organizador(dados_organizador["nome"], dados_organizador["senha"], self.__id_organizador)
             self.__organizador_dao.add(organizador)
+            self.__tela_organizador.mostra_mensagem("Organizador cadastrado!")
     
     def pega_organizador_por_id(self, id):
         if id == "" or id ==  None:

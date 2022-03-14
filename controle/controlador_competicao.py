@@ -1,8 +1,5 @@
 from limite.tela_competicao import TelaCompeticao
 from entidade.competicao import Competicao
-from controle.controlador_competidor import ControladorCompetidor
-from controle.controlador_partida import ControladorPartida
-from entidade.partida import Partida
 from persistencia.competicao_dao import CompeticaoDAO
 from excecoes.empty_field import EmptyFieldError
 
@@ -40,8 +37,8 @@ class ControladorCompeticao():
                 n = n +1
             ganhador = 'Nenhum'
             competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, ganhador, self.__id_competicao)
-            self.__tela_competicao.mostra_mensagem("Competição criada com sucesso!")
             self.__competicao_dao.add(competicao)
+            self.__tela_competicao.mostra_mensagem("Competição criada com sucesso!")
     
     def pega_competicao_por_id(self, id):
         if id == "" or id ==  None:

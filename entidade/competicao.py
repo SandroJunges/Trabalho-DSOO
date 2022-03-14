@@ -1,6 +1,3 @@
-from entidade.competidor import Competidor
-from entidade.partida import Partida
-
 class Competicao():
     
     def __init__(self, nome_torneio: str, esporte:str, formato: int, organizador: str, participantes: list, ganhador: str, id_competicao: int):
