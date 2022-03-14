@@ -61,7 +61,7 @@ class TelaCompeticao(TelaAbstrata):
             [sg.Submit('Confirmar', font=fonte_texto, size=tamanho_texto), sg.Cancel('Cancelar e retornar', font=fonte_texto, size=tamanho_texto)]
         ]
 
-        window = sg.Window('Selecionar Competicao', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
+        window = sg.Window('Selecionar Competicao', size=(900,900), element_justification="c", grab_anywhere=True).Layout(layout)
         button, competicao = window.Read()
         window.close()
         if button == 'Confirmar':

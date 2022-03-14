@@ -48,6 +48,8 @@ class ControladorOrganizador():
 
     def dados_lista_organizadores(self):
         return [f'ID: {organizador.id_organizador}  Nome: {organizador.nome}' for organizador in self.__organizador_dao.get_all()]
+    def dados_nome_organizadores(self):
+        return [f'{organizador.nome}' for organizador in self.__organizador_dao.get_all()]
 
     def alterar_organizador(self):
         id = self.__tela_organizador.seleciona_organizador(self.dados_lista_organizadores())

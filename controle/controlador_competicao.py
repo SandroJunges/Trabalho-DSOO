@@ -12,7 +12,7 @@ class ControladorCompeticao():
         self.__id_competicao = 0
 
     def criar_competicao(self):
-        list_organizador = self.__controlador_sistema.controlador_organizador.dados_lista_organizadores()
+        list_organizador = self.__controlador_sistema.controlador_organizador.dados_nome_organizadores()
         dados_competicao = self.__tela_competicao.pega_dados(list_organizador)
         if (dados_competicao == None):
             return
