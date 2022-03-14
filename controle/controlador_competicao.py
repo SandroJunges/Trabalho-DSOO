@@ -31,15 +31,21 @@ class ControladorCompeticao():
             self.__id_competicao = id + 1
             n = 1
             participantes = []
-            while n <= dados_competicao['formato']:
-                participante = self.__tela_competicao.pega_participantes(self.__controlador_sistema.controlador_competidor.dados_lista_competidores())
-                participantes.append(participante)
-                n = n +1
-            ganhador = 'Nenhum'
-            competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, ganhador, self.__id_competicao)
-            self.__competicao_dao.add(competicao)
-            self.__tela_competicao.mostra_mensagem("Competição criada com sucesso!")
-    
+            try:
+                while n <= dados_competicao['formato']:
+                    participante = self.__tela_competicao.pega_participantes(self.__controlador_sistema.controlador_competidor.dados_lista_competidores())
+                    participantes.append(participante)
+                    n = n +1
+                ganhador = 'Nenhum'
+                competicao = Competicao(dados_competicao["nome_torneio"], dados_competicao["esporte"], dados_competicao["formato"], dados_competicao["organizador"], participantes, ganhador, self.__id_competicao)
+            except IndexError:
+                self.__tela_competicao.mostra_mensagem("Selecione um competidor!")
+            except TypeError:
+                self.__tela_competicao.mostra_mensagem("Selecione a quantidade de competidores!")
+            else:
+                self.__competicao_dao.add(competicao)
+                self.__tela_competicao.mostra_mensagem("Competição criada com sucesso!")
+
     def pega_competicao_por_id(self, id):
         if id == "" or id ==  None:
             return None
@@ -77,18 +83,20 @@ class ControladorCompeticao():
                     competicao.ganhador = lista_participantes[0]
                     n = competicao.formato + 1
                     self.__competicao_dao.add(competicao)
-                    self.__tela_competicao.mostra_mensagem("Competição finalizada!")
+                    self.__tela_competicao.mostra_mensagem("Competição está finalizada!")
                 else:
                     rodada = competicao.formato
                     novos_dados_competicao = self.__tela_competicao.partidas(n, rodada, lista_participantes)
-                    if novos_dados_competicao != None:
-                        #aqui é pra remover SAN ve ai
-                            name =  novos_dados_competicao[0]
-                            competicao.participantes.remove(self.__controlador_sistema.controlador_competidor.pega_id_por_nome(name))
-                            lista_participantes.remove(name)
-                            n = n+1
-                    else:
-                        return
+                    try:
+                        if novos_dados_competicao != None:
+                                name =  novos_dados_competicao[0]
+                                competicao.participantes.remove(self.__controlador_sistema.controlador_competidor.pega_id_por_nome(name))
+                                lista_participantes.remove(name)
+                                n = n+1
+                        else:
+                            return
+                    except IndexError:
+                        self.__tela_competicao.mostra_mensagem("Aviso: Selecione um competidor!")
     
     def dados_competicao_ganhador(self):
          return [f'ID: {competicao.id_competicao}  Nome: {competicao.nome_torneio} | Esporte: {competicao.esporte} | Qtd. Participantes: {competicao.formato} ||||| Vencedor: {competicao.ganhador}' for competicao in self.__competicao_dao.get_all()]        

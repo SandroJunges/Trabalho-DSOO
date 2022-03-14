@@ -56,14 +56,17 @@ class ControladorOrganizador():
         if(organizador is not None):
             novos_dados_organizador = self.__tela_organizador.pega_dados()
             try:
-                if novos_dados_organizador['nome'] == "" or novos_dados_organizador['senha'] == "":
-                    raise EmptyFieldError()
-            except EmptyFieldError as e:
-                return self.__tela_organizador.mostra_mensagem(e.mensagem)
-            try:
-                self.verifica_duplicidade_de_nome(novos_dados_organizador['nome'])
-            except DuplicatedException as e:
-                return self.__tela_organizador.mostra_mensagem(str(e))
+                try:
+                    if novos_dados_organizador['nome'] == "" or novos_dados_organizador['senha'] == "":
+                        raise EmptyFieldError()
+                except EmptyFieldError as e:
+                    return self.__tela_organizador.mostra_mensagem(e.mensagem)
+                try:
+                    self.verifica_duplicidade_de_nome(novos_dados_organizador['nome'])
+                except DuplicatedException as e:
+                    return self.__tela_organizador.mostra_mensagem(str(e))
+            except TypeError:
+                self.__tela_organizador.mostra_mensagem("Aviso: Tente novamente!")
             if novos_dados_organizador != None:
                 organizador.nome = novos_dados_organizador["nome"]
                 organizador.senha = novos_dados_organizador["senha"]
@@ -86,7 +89,7 @@ class ControladorOrganizador():
     def verifica_duplicidade_de_nome (self, nome):
         for organizador in self.__organizador_dao.get_all():
             if nome == organizador.nome:
-                raise DuplicatedException(mensagem_personalizada='Este organizador já foi criado!')
+                raise DuplicatedException(mensagem_personalizada='Aviso: Este organizador já foi criado!')
 
     def retornar (self):
         self.__controlador_sistema.abre_tela()

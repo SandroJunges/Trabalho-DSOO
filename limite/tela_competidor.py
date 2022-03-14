@@ -81,11 +81,14 @@ class TelaCompetidor(TelaAbstrata):
         window = sg.Window('Selecionar Competidor', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
         button, competidor = window.Read()
         window.close()
-        if button == 'Confirmar':
-            id = (competidor['competidor'][0].split())[1]
-            id = int(id)
-            return id
-        return
+        try:
+            if button == 'Confirmar':
+                id = (competidor['competidor'][0].split())[1]
+                id = int(id)
+                return id
+            return
+        except IndexError:
+            self.mostra_mensagem("Aviso: Selecione um competidor!")
         
     
     def mostra_mensagem(self, msg):
