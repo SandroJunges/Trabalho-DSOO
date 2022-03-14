@@ -13,7 +13,7 @@ class TelaCompeticao(TelaAbstrata):
             [sg.Text("O que deseja fazer?", font=fonte_titulo, size=(0, 1), text_color=cor_titulo, background_color=fundo_titulo)],
             [sg.Text("")],
             [sg.Button("Cadastrar Competição", font=fonte_texto, size=tamanho_texto, key=1)],
-            [sg.Button("Listar Competições", font=fonte_texto, size=tamanho_texto, key=2)],
+            [sg.Button("Excluir Competição", font=fonte_texto, size=tamanho_texto, key=2)],
             [sg.Button("Administrar Competição", font=fonte_texto, size=tamanho_texto, key=3)],
             [sg.Button("Relatório Competições/Ganhadores", font=fonte_texto, size=tamanho_texto, key=4)],
             [sg.Button("Retornar", font=fonte_texto, size=tamanho_texto, key=5)]
@@ -47,24 +47,6 @@ class TelaCompeticao(TelaAbstrata):
         window.close()
         if button == "Confirmar":
             return dados_competidor
-            
-    def mostra_dados(self, competicoes: list):
-        competicoes = [
-            [sg.Listbox(values=competicoes, font=fonte_texto, size=(80, 8), key='competicao')]
-        ]
-
-        layout = [
-            [sg.Image(logo2, size=(300, 300))],
-            [sg.Text('Listando competicoes', font=fonte_titulo, size=(0,1), text_color=cor_titulo, background_color=fundo_titulo)],
-            [competicoes],
-            [sg.Text('')],
-            [sg.Button('Retornar', font=fonte_texto, size=tamanho_texto, key=1)]
-        ]
-
-        window = sg.Window('Listar Competicoes', size=tamanho_janela, element_justification="c", grab_anywhere=True).Layout(layout)
-        button = window.Read()
-        window.close()
-
 
     def seleciona_competicao(self, competicoes: list):
         competicoes = [

@@ -55,8 +55,13 @@ class ControladorCompeticao():
     def dados_lista_competicoes(self):
         return [f'ID: {competicao.id_competicao}  Nome: {competicao.nome_torneio} | Esporte: {competicao.esporte} | Qtd. Participantes: {competicao.formato} | Organizador: {competicao.organizador}' for competicao in self.__competicao_dao.get_all()]        
     
-    def informacoes_competicao(self):
-        self.__tela_competicao.mostra_dados(self.dados_lista_competicoes())
+    def excluir_competicao(self):
+        id = self.__tela_competicao.seleciona_competicao(self.dados_lista_competicoes())
+        competicao = self.pega_competicao_por_id(id)
+
+        if (competicao is not None):
+            self.__tela_competicao.mostra_mensagem("Competição excluída!")
+            self.__competicao_dao.remove(competicao)
     
     def administrar_competicao(self):
         id = self.__tela_competicao.seleciona_competicao(self.dados_lista_competicoes())
@@ -74,6 +79,7 @@ class ControladorCompeticao():
                     self.__tela_competicao.ganhador(lista_participantes)
                     competicao.ganhador = lista_participantes[0]
                     n = competicao.formato + 1
+                    self.__competicao_dao.add(competicao)
                 else:
                     rodada = competicao.formato
                     novos_dados_competicao = self.__tela_competicao.partidas(n, rodada, lista_participantes)
@@ -96,7 +102,7 @@ class ControladorCompeticao():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.criar_competicao, 2: self.informacoes_competicao, 3: self.administrar_competicao, 4: self.relatorio, 5: self.retornar}
+        lista_opcoes = {1: self.criar_competicao, 2: self.excluir_competicao, 3: self.administrar_competicao, 4: self.relatorio, 5: self.retornar}
 
         continua = True
         while continua:
